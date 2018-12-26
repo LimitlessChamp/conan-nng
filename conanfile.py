@@ -64,7 +64,8 @@ class NngConan(ConanFile):
         self.cpp_info.libs = tools.collect_libs(self)
 
         if self.settings.os == "Windows":
-            if not self.options.shared:
+            if not self.options.shared:		
+                self.cpp_info.libs.append('wsock32')
                 self.cpp_info.libs.append('mswsock')
                 self.cpp_info.libs.append('ws2_32')
         elif self.settings.os == "Linux":
