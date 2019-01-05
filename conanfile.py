@@ -48,6 +48,8 @@ class NngConan(ConanFile):
         cmake = CMake(self)
         cmake.definitions["NNG_TESTS"] = self.options.enable_tests
         cmake.definitions["NNG_ENABLE_NNGCAT"] = self.options.enable_nngcat
+        if self.settings.os == "Android":
+            cmake.definitions["NNG_PLATFORM_ANDROID"] = True
         cmake.configure()
         return cmake
 

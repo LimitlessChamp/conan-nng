@@ -21,5 +21,7 @@ class TestPackageConan(ConanFile):
                 self.run(bin_path)
             elif self.settings.os == "Macos":
                 self.run("DYLD_LIBRARY_PATH=%s %s" % (os.environ.get('DYLD_LIBRARY_PATH', ''), bin_path))
+            elif self.settings.os == "Android":
+                print("Test Application Compile Path=%s" % bin_path)
             else:
                 self.run("LD_LIBRARY_PATH=%s %s" % (os.environ.get('LD_LIBRARY_PATH', ''), bin_path))
