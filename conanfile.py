@@ -20,6 +20,7 @@ class NngConan(ConanFile):
     generators = "cmake"
     source_subfolder = "source_subfolder"
     options = {
+       "pic": [True, False],
        "shared": [True, False],
        "enable_tests": [True, False],
        "enable_tools": [True, False],
@@ -30,7 +31,8 @@ class NngConan(ConanFile):
         "shared=False",
         "enable_tests=False",
         "enable_tools=False",
-        "enable_nngcat=False"
+        "enable_nngcat=False",
+        "pic=False"
     )
 
     def source(self):
@@ -50,6 +52,10 @@ class NngConan(ConanFile):
         cmake.definitions["NNG_ENABLE_NNGCAT"] = self.options.enable_nngcat
         if self.settings.os == "Android":
             cmake.definitions["NNG_PLATFORM_ANDROID"] = True
+        if self.options.pic:
+            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
+        if self.options.shared:
+            cmake.definitions["BUILD_SHARED_LIBS"] = "ON"         
         cmake.configure()
         return cmake
 

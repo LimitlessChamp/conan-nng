@@ -8,7 +8,10 @@ import os
 class TestPackageConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-
+    options = {
+       "pic": [True, False]
+    }
+    
     def build(self):
         cmake = CMake(self)
         cmake.configure()
